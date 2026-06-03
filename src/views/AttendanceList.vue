@@ -90,6 +90,8 @@ const handleDelete = (id) => {
                 Nama
                 <span v-if="sortKey === 'nama'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
               </th>
+              <th>Jenis Kelamin</th>
+              <th>Alamat</th>
               <th @click="toggleSort('tanggalAbsen')" style="cursor: pointer" class="text-primary">
                 Tanggal Absen
                 <span v-if="sortKey === 'tanggalAbsen'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
@@ -101,20 +103,19 @@ const handleDelete = (id) => {
           </thead>
           <tbody>
             <tr v-if="displayedAttendances.length === 0">
-              <td colspan="6" class="text-center py-4 text-muted">Belum ada data absensi.</td>
+              <td colspan="8" class="text-center py-4 text-muted">Belum ada data absensi.</td>
             </tr>
             <tr v-for="(item, index) in displayedAttendances" :key="item.id">
               <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
               <td>{{ item.nama }}</td>
+              <td>{{ item.jenisKelamin }}</td>
+              <td class="alamat-text">{{ item.alamat }}</td>
               <td>{{ item.tanggalAbsen }}</td>
               <td>{{ item.jamMasuk }}</td>
               <td>{{ item.jamKeluar }}</td>
               <td>
-                <div class="wadah-button">
-                  <button
-                    class="btn btn-sm btn-warning me-2 text-white"
-                    @click="handleEdit(item.id)"
-                  >
+                <div class="action-wrapper">
+                  <button class="btn btn-sm btn-warning text-white" @click="handleEdit(item.id)">
                     Edit
                   </button>
                   <button class="btn btn-sm btn-danger" @click="handleDelete(item.id)">
@@ -156,8 +157,14 @@ const handleDelete = (id) => {
 </template>
 
 <style scoped>
-.wadah-button {
+.action-wrapper {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+}
+
+.alamat-text {
+  max-width: 200px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 </style>
